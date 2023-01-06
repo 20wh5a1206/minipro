@@ -6,6 +6,8 @@ import Trail1 from "./components/Publications";
 import Home  from "./components/Home";
 import WorkFlow from "./components/WorkFlow";
 import FirstData from "./components/NewPublication";
+import FirstData1 from "./components/NewPublication1";
+import Publications1 from "./components/Publications1";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,7 +20,7 @@ function App() {
           <Route path="/" element={<Login/>}/>
           <Route path="/home" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
-          <Route path="/publications" element={<Trail1/>}/>
+          <Route path="/publications" element={<Publications1/>}/>
           {/* <Route path="/insert" element={<WorkFlow/>}/> */}
           <Route path="/insert" element={<FirstData/>}/>
         </Routes>

@@ -18,7 +18,7 @@ import { Button } from '@mui/material';
 import Service from '../Service/http';
 import HelpModal from './HelpModal';
 
-function FirstData() {
+function FirstData1() {
     // const classes = useStyles();
     const service = new Service()
     // const username = query.get('')
@@ -881,11 +881,13 @@ function FirstData() {
                                                 required
                                                 id="article-cite"
                                                 name="article-cite"
-                                                label="Cite Article"
+                                                label="Article Cite"
                                                 fullWidth
                                                 variant="standard"
                                                 onChange={handleChange}
                                             />
+                                           
+
                                         </MDBCol>
 
 
@@ -1136,15 +1138,15 @@ function FirstData() {
                                             <br/>
                                             {/* <MDBCheckbox name='flexCheck' id='flexCheckDefault' labelClass='text-white mb-4' label='' /> */}
                                             {/* <MDBBtn color='light' size='lg'>Publish insert</MDBBtn> */}
-                                            {/* <MDBRow>
+                                            {/* <MDBRow> */}
 
-                                                <MDBCol md='6'>
+                                                {/* <MDBCol md='6'>
                                             <Button variant='contained' color='warning' onClick={handleShow}>Help</Button>
-                                            </MDBCol>
-                                            <MDBCol md='6'> */}
+                                            </MDBCol> */}
+                                            {/* <MDBCol md='6'> */}
                                             <Button variant="contained" color='secondary' type='submit' form="insert-data" onClick={() => {formRef.current.reportValidity();setSend(send+1)}}>Submit</Button>
-                                            {/* </MDBCol>
-                                            </MDBRow> */}
+                                            {/* </MDBCol> */}
+                                            {/* </MDBRow> */}
                                         </MDBCol>
                                     
                                     </MDBRow>
@@ -1162,4 +1164,4 @@ function FirstData() {
     );
 }
 
-export default FirstData;
+export default FirstData1;
