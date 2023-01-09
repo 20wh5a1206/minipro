@@ -5,6 +5,7 @@ module.exports.postData =async function(req,res) {
     try{
         const myobj = req.body;
         console.log(myobj)
+        myobj.year = new Date(myobj.year)
         dataModal.create(myobj, function(err, res) {  
             if (err) throw err;
             console.log("success")
@@ -23,12 +24,19 @@ module.exports.getData = async function (req, res) {
         let branch = req.query.branch || ""
         let user = req.query.username || ""
         let cjb = req.query.cjb || ""
-        let year = req.query.year || ""
+        let year = parseInt(req.query.year) || 0
         let nation = req.query.nationality || ""
         let scl = req.query.scl || ""
         let author = req.query.author_no || ""
         let page = req.query.page || 1
-        let limit = req.query.limit || 5
+        let limit = req.query.limit || 10
+        let startDate = req.query.startDate?new Date(req.query.startDate):0
+        let endDate = req.query.endDate?new Date(req.query.endDate):0
+        // let startYear = parseInt(req.query.startYear) || 0
+        // let endYear = parseInt(req.query.endYear) || 0
+        // let startMonth = parseInt(req.query.startMonth) || 0
+        // let endMonth = parseInt(req.query.endMonth) || 0
+
         // console.log(cjb)
         let query = {};
         if (title!=""){
@@ -46,7 +54,7 @@ module.exports.getData = async function (req, res) {
             query["cjb"] = { $regex: '.*' + cjb + '.*', "$options" : "i"}
             // console.log(query)
         }
-        if(year!=""){
+        if(year!=0){
             query["year"] = year
         }
         if(nation!=""){
@@ -58,10 +66,28 @@ module.exports.getData = async function (req, res) {
         if(author!=""){
             query["author_no"] = author
         }
-        // console.log("WHERE",query)
+        if(startDate !=0 && endDate!=0){
+            query["year"] = {$lte: endDate, $gte: startDate}
+            // query["month"] = {$lte: endMonth+1, $gte: startMonth}
+        }
+        console.log("WHERE",query)
+        if(limit==='0'){
+            dataModal.paginate(query,{page:page,limit:0},function(err,result) {
+                if (err) res.status(500).send(err);
+                else{
+                    limit=result.total
+                    console.log("Result",result)
+                // ...
+                // res.json(result)
+                // console.log("RESULT", result)
+                }
+              });
+
+        }
         dataModal.paginate(query,{page:page,limit:limit},function(err,result) {
-            if (err) res.status(500).send(err);
+            if (err) {console.log(err);res.status(500).send(err)}
             else{
+                console.log("Result",result)
             // ...
             res.json(result)
             // console.log("RESULT", result)
