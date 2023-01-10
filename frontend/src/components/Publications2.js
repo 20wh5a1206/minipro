@@ -96,7 +96,7 @@ function Publications2() {
     }
     const fun = (e) => {
         var isod = new Date(e).toLocaleDateString().split('/');
-        return [isod[0], isod[2]].join("-")
+        return isod[2]
     }
     const handleClear = () => {
         setEndDate("")
@@ -364,7 +364,7 @@ function Publications2() {
                             //minWidth: 140
                         },
                         {
-                            Header: () => (<div>Month-Year<br /><input type="text" id="year" name="year" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setYearFilterValue(e.target.value); }} /></div>),
+                            Header: () => (<div>Year<br /><input type="text" id="year" name="year" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setYearFilterValue(e.target.value); }} /></div>),
                             accessor: "year",
                             Cell: e => <a>{fun(e.original.year)}</a>,
                             getProps: (state, rowInfo, column) => {
@@ -377,20 +377,20 @@ function Publications2() {
                             },
                             //minWidth: 420
                         },
-                        //   {  
-                        //     Header: "Month",
-                        //     accessor: "month",
-                        //     //Cell: e =>{e.original.month},
-                        //     getProps: (state, rowInfo, column) => {
-                        //       return {
-                        //         style: {
-                        //           color: (rowInfo?.original?.my) ? color : textColor,
-                        //           background: rowInfo?.original?.my ? background : "#C3D496",
-                        //         },
-                        //       };
-                        //     },
-                        //minWidth: 210
-                        //   },
+                          {  
+                            Header: "Month",
+                            accessor: "month",
+                            //Cell: e =>{e.original.month},
+                            getProps: (state, rowInfo, column) => {
+                              return {
+                                style: {
+                                  color: (rowInfo?.original?.my) ? color : textColor,
+                                  background: rowInfo?.original?.my ? background : "#C3D496",
+                                },
+                              };
+                            },
+                        // minWidth: 210
+                          },
                         {
                             Header: "ISSN/ISBN/DOI",
                             accessor: "doi",

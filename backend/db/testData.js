@@ -14,7 +14,7 @@ var dataSchema = new mongoose.Schema({
     vol                               : { type: String, default: "null"},
     issue                             : { type: String, default: "null"},
     year                              : { type: Date},
-    // month                             : { type: Number, required: true},
+    month                             : { type: Number, default:"null"},
     doi                               : { type: String, required: true},
     nationality                       : { type: String, required: true},
     organised_by                      : { type: String, default: "null"},

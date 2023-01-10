@@ -27,6 +27,7 @@ function FirstData() {
     // const username = query.get('')
     const formRef = React.useRef();
     const [date, setDate] = useState("")
+    const [year, setYear] = useState("")
     const [body, setBody] = useState({
         username: '',
         cjb: '',
@@ -451,6 +452,7 @@ function FirstData() {
 
         else if (e.target.id === 'month') {
             // body.month = e.target.value
+            console.log("MONTH",(body.month.length===1?"0"+e.target.value:e.target.value))
             setBody({
                 username: body.username,
                 cjb: body.cjb,
@@ -464,7 +466,7 @@ function FirstData() {
                 name_cjb: body.name_cjb,
                 vol: body.vol,
                 issue: body.issue,
-                year: body.year,
+                year: year!=""?new Date(year+"-"+(e.target.value.length===1?"0"+e.target.value:(e.target.value.length===0?"01":e.target.value))+"-01").toLocaleDateString():body.year,
                 month: e.target.value,
                 doi: body.doi,
                 organised_by: body.organised_by,
@@ -731,8 +733,10 @@ function FirstData() {
         }
         else {
             // body.year = e.target.value
-            console.log("IN ELSE", e)
+            console.log("IN ELSE 1",e.target.value+"-"+(body.month===''?"01":body.month))
+            console.log("IN ELSE", ""+e.target.value+"-"+body.month===''?"01":body.month+"-01")
             setDate(e)
+            setYear(e.target.value)
             setBody({
                 username: body.username,
                 cjb: body.cjb,
@@ -746,7 +750,7 @@ function FirstData() {
                 name_cjb: body.name_cjb,
                 vol: body.vol,
                 issue: body.issue,
-                year: e,
+                year: new Date(e.target.value+"-"+(body.month===''?"01":body.month)+"-01").toLocaleDateString(),
                 month: body.month,
                 doi: body.doi,
                 organised_by: body.organised_by,
@@ -982,17 +986,17 @@ function FirstData() {
                                                             onChange={handleChange}
                                                         />
                                                     </MDBCol>
-                                                    <MDBCol md='6'>
-                                                        <h8 color="grey"> Month-Year* </h8>
-                                                        <DatePicker
+                                                    <MDBCol md='3'>
+                                                        
+                                                        {/* <DatePicker
                                                             selected={date}
                                                             onChange={handleChange}
                                                             dateFormat="MM/yyyy"
                                                             showMonthYearPicker
                                                             required
                                                             label="Month-Year"
-                                                        />
-                                                        {/* <TextField
+                                                        /> */}
+                                                         <TextField
                                                 required
                                                 id="year"
                                                 name="year"
@@ -1005,7 +1009,6 @@ function FirstData() {
                                                 </MDBCol>
                                                 <MDBCol md='3'>
                                                 <TextField
-                                                required
                                                 id="month"
                                                 name="month"
                                                 label="Month"
@@ -1013,7 +1016,7 @@ function FirstData() {
                                                 variant="standard"
                                                 color='secondary'
                                                 onChange={handleChange}
-                                            /> */}
+                                            /> 
                                                     </MDBCol>
 
                                                 </MDBRow>
