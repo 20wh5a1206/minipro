@@ -466,8 +466,8 @@ function FirstData() {
                 name_cjb: body.name_cjb,
                 vol: body.vol,
                 issue: body.issue,
-                year: year!=""?new Date(year+"-"+(e.target.value.length===1?"0"+e.target.value:(e.target.value.length===0?"01":e.target.value))+"-01").toLocaleDateString():body.year,
-                month: e.target.value,
+                year: (1<=e.target.value && e.target.value<=12)?(year!=""?new Date(year+"-"+(e.target.value.length===1?"0"+e.target.value:(e.target.value.length===0?"01":e.target.value))+"-01").toLocaleDateString():body.year):body.year,
+                month: (1<=e.target.value && e.target.value<=12)?e.target.value:'',
                 doi: body.doi,
                 organised_by: body.organised_by,
                 scl: body.scl,
@@ -750,7 +750,7 @@ function FirstData() {
                 name_cjb: body.name_cjb,
                 vol: body.vol,
                 issue: body.issue,
-                year: new Date(e.target.value+"-"+(body.month===''?"01":body.month)+"-01").toLocaleDateString(),
+                year: (2000<e.target.value && e.target.value<2100)?new Date(e.target.value+"-"+(body.month===''?"01":body.month)+"-01").toLocaleDateString():'',
                 month: body.month,
                 doi: body.doi,
                 organised_by: body.organised_by,
@@ -970,6 +970,7 @@ function FirstData() {
                                                             fullWidth
                                                             variant="standard"
                                                             color='secondary'
+                                                            type="number"
                                                             onChange={handleChange}
                                                         />
                                                     </MDBCol>
@@ -983,6 +984,7 @@ function FirstData() {
                                                             fullWidth
                                                             variant="standard"
                                                             color='secondary'
+                                                            type="number"
                                                             onChange={handleChange}
                                                         />
                                                     </MDBCol>
@@ -1004,6 +1006,7 @@ function FirstData() {
                                                 fullWidth
                                                 variant="standard"
                                                 color='secondary'
+                                                type="number"
                                                 onChange={handleChange}
                                             />
                                                 </MDBCol>
@@ -1015,6 +1018,7 @@ function FirstData() {
                                                 fullWidth
                                                 variant="standard"
                                                 color='secondary'
+                                                type="number"
                                                 onChange={handleChange}
                                             /> 
                                                     </MDBCol>
@@ -1093,13 +1097,13 @@ function FirstData() {
 
                                                     <MDBCol md='4'>
                                                         <FormControl variant="standard" sx={{ minWidth: 120 }}>
-                                                            <InputLabel id="demo-simple-select-standard-label" color='secondary'>Are You Author?</InputLabel>
+                                                            <InputLabel id="demo-simple-select-standard-label" color='secondary'>Author Order</InputLabel>
                                                             <Select
                                                                 labelId="author_no"
                                                                 id="author_no"
                                                                 value={author_no}
                                                                 onChange={handleChangeAuthorNo}
-                                                                label="Are You Author?"
+                                                                label="Author Order"
                                                                 color='secondary'
                                                                // required
                                                             >
