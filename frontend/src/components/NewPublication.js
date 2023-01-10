@@ -867,6 +867,8 @@ function FirstData() {
                                                                 <MenuItem value={"IT"}>IT</MenuItem>
                                                                 <MenuItem value={"ECE"}>ECE</MenuItem>
                                                                 <MenuItem value={"EEE"}>EEE</MenuItem>
+                                                                <MenuItem value={"AI/ML"}>AI/ML</MenuItem>
+                                                                <MenuItem value={"BS&H"}>BS&H</MenuItem>
                                                             </Select>
 
                                                         </FormControl>
@@ -930,10 +932,10 @@ function FirstData() {
                                             <MDBCol md='6' className='bg-indigo p-5'>
 
                                                 <TextField
-                                                    required
-                                                    id="organizor"
-                                                    name="organizor"
-                                                    label="Organizor"
+                                                    //required
+                                                    id="organizer"
+                                                    name="organizer"
+                                                    label="Organizer"
                                                     fullWidth
                                                     variant="standard"
                                                     color='secondary'
@@ -942,7 +944,7 @@ function FirstData() {
                                                 <br />
                                                 <br />
                                                 <TextField
-                                                    // required
+                                                    required
                                                     id="link"
                                                     name="link"
                                                     label="Link"
@@ -957,7 +959,7 @@ function FirstData() {
 
                                                     <MDBCol md='3'>
                                                         <TextField
-                                                            required
+                                                            //required
                                                             id="vol"
                                                             name="vol"
                                                             label="Volume"
@@ -970,7 +972,7 @@ function FirstData() {
 
                                                     <MDBCol md='3'>
                                                         <TextField
-                                                            required
+                                                            //required
                                                             id="issue"
                                                             name="issue"
                                                             label="Issue"
@@ -1029,7 +1031,7 @@ function FirstData() {
                                                                 onChange={handleChangeProceedings}
                                                                 label="In Proceedings?"
                                                                 color='secondary'
-                                                                required
+                                                                //required
                                                             >
                                                                 <MenuItem value="">
                                                                     <em>None</em>
@@ -1051,7 +1053,7 @@ function FirstData() {
                                                                 onChange={handleChangePublished}
                                                                 label="Abstract Published?"
                                                                 color='secondary'
-                                                                required
+                                                                //required
                                                             >
                                                                 <MenuItem value="">
                                                                     <em>None</em>
@@ -1071,7 +1073,7 @@ function FirstData() {
                                                                 onChange={handleChangeAffiliated}
                                                                 label="Affiliated?"
                                                                 color='secondary'
-                                                                required
+                                                                //required
                                                             >
                                                                 <MenuItem value="">
                                                                     <em>None</em>
@@ -1096,7 +1098,7 @@ function FirstData() {
                                                                 onChange={handleChangeAuthorNo}
                                                                 label="Are You Author?"
                                                                 color='secondary'
-                                                                required
+                                                               // required
                                                             >
                                                                 <MenuItem value="">
                                                                     <em>None</em>
@@ -1114,7 +1116,7 @@ function FirstData() {
 
                                                     <MDBCol md='4'>
                                                         <TextField
-                                                            required
+                                                            //required
                                                             id="startingPage"
                                                             name="startingPage"
                                                             label="Starting Page"
@@ -1127,7 +1129,7 @@ function FirstData() {
                                                     </MDBCol>
                                                     <MDBCol md='4'>
                                                         <TextField
-                                                            required
+                                                           // required
                                                             id="endingPage"
                                                             name="endingPage"
                                                             label="Ending Page"
@@ -1147,7 +1149,7 @@ function FirstData() {
                                                             required
                                                             id="scopus"
                                                             name="scopus"
-                                                            label="Scopus/WoS/SCI"
+                                                            label="SCI/Scopus/WoS/Others"
                                                             fullWidth
                                                             variant="standard"
                                                             color='secondary'
