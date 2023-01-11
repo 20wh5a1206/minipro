@@ -36,7 +36,7 @@ function Login() {
 
     const onSuccess = (res) => {
         console.log(res)
-        if(res.profileObj.email.split('@')[1]==="bvrithyderabad.edu.in" && ('a'<=res.profileObj.email[0]<='z' || res.profileObj.email==="19wh1a1242@bvrithyderabad.edu.in")){
+        if(res.profileObj.email.split('@')[1]==="bvrithyderabad.edu.in" && ('a'<=res.profileObj.email[0]<='z' || res.profileObj.email==="19wh1a1242@bvrithyderabad.edu.in"|| res.profileObj.email==="20wh5a1206@bvrithyderabad.edu.in")){
             // console.log("TRUE")
             // setProfile(res.profileObj);
             navigate("/home");
