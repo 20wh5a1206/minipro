@@ -51,7 +51,7 @@ module.exports.getData = async function (req, res) {
         }
         if (cjb!=""){
             // console.log(cjb)
-            query["cjb"] = { $regex: '.*' + cjb + '.*', "$options" : "i"}
+            query["cjb"] = cjb
             // console.log(query)
         }
         if(year!=0){

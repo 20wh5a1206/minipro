@@ -38,7 +38,7 @@ function Publications2() {
     let [publicationFilterValue, setPublicationFilterValue] = useState("");
     let [branchFilterValue, setBranchFilterValue] = useState("");
     let [publishedByFilterValue, setPublishedByFilterValue] = useState("");
-    let [c_j_bFilterValue, setc_j_bFilterValue] = useState("");
+    let [c_j_bFilterValue, setc_j_bFilterValue] = useState("ALL");
 
     let [yearFilterValue, setYearFilterValue] = useState("");
 
@@ -50,6 +50,7 @@ function Publications2() {
     let [endDate, setEndDate] = useState("")
 
     const [show, setShow] = useState(false)
+    let [jobs, setJobs] = useState(["ALL","C","J","B","BC"])
     let [authors, setAuthors] = useState(["ALL", "Single", "First", "Second", "Third", "Fourth", "Fifth", "Others"])
     // let [verdicts, setVerdict] = useState(['All',"ACCEPTED", "WRONG ANSWER","TIME LIMIT EXCEEDED","RUNTIME ERROR","PENDING","OTHER","COMPILATION ERROR"]);
     // let [languages, setLanguage] = useState(['All',"CPP", "C#", "JAVA", "JAVASCRIPT", "PYTHON"]);
@@ -57,20 +58,20 @@ function Publications2() {
     /*Pagination Data*/
     let [pageNo, setPageNo] = useState(1);
     let [perPage, setPerPage] = useState(10);
-    let [startMonth, setStartMonth] = useState("");
-    let [startYear, setStartYear] = useState("");
-    let [endMonth, setEndMonth] = useState("");
-    let [endYear, setEndYear] = useState("");
+    // let [startMonth, setStartMonth] = useState("");
+    // let [startYear, setStartYear] = useState("");
+    // let [endMonth, setEndMonth] = useState("");
+    // let [endYear, setEndYear] = useState("");
     let [Required, setRequired] = useState(false)
     const handleClose = () => setShow(false);
     const handleShow = () => { setShow(true) };
-    const handleSearch = () => { if (startDate) { setYearFilterValue(""); setStartMonth(startDate.getMonth() + 1); setEndMonth(endDate.getMonth() + 1); setEndYear(endDate.getFullYear()); setStartYear(startDate.getFullYear()) }; setGetApi(getApi + 1); setShow(false) };
+    const handleSearch = () => { if (startDate && endDate) { setYearFilterValue("") ; setGetApi(getApi + 1); setShow(false)} };
 
-    const CalendarContainer = ({ children }) => {
-        const el = document.getElementById("calendar-portal");
+    // const CalendarContainer = ({ children }) => {
+    //     const el = document.getElementById("calendar-portal");
 
-        return <Portal container={el}>{children}</Portal>;
-    };
+    //     return <Portal container={el}>{children}</Portal>;
+    // };
 
 
 
@@ -95,25 +96,27 @@ function Publications2() {
     }
     const fun = (e) => {
         var isod = new Date(e).toLocaleDateString().split('/');
-        return [isod[0], isod[2]].join("-")
+        return isod[2]
     }
     const handleClear = () => {
         setEndDate("")
-        setEndMonth("")
-        setEndYear("")
+        // setEndMonth("")
+        // setEndYear("")
         setStartDate("")
-        setStartMonth("")
-        setStartYear("")
+        // setStartMonth("")
+        // setStartYear("")
         setRequired(false)
-        setAuthorsFilterValue("")
+        setAuthorsFilterValue("ALL")
         setBranchFilterValue("")
         setNationalityFilterValue("")
         setPublicationFilterValue("")
         setPublishedByFilterValue("")
         setScopusFilterValue("")
         setYearFilterValue("")
-        setc_j_bFilterValue("")
+        setc_j_bFilterValue("ALL")
         setGetApi(0)
+        setPerPage(10)
+        setPageNo(1)
     }
 
     useEffect(() => {
@@ -123,7 +126,7 @@ function Publications2() {
         if (!tokens) {
             navigate("/login")
         }
-        service.get("api/data?title=" + publicationFilterValue + "&branch=" + branchFilterValue + "&username=" + publishedByFilterValue + "&cjb=" + c_j_bFilterValue + "&year=" + yearFilterValue + "&nationality=" + nationalityFilterValue + "&scl=" + scopusFilterValue + "&author_no=" + (authorsFilterValue === "ALL" ? "" : authorsFilterValue) + "&page=" + pageNo + "&limit=" + perPage + "&startDate=" + startDate + "&endDate=" + endDate).then((json) => {
+        service.get("api/data?title=" + publicationFilterValue + "&branch=" + branchFilterValue + "&username=" + publishedByFilterValue + "&cjb=" + (c_j_bFilterValue==="ALL"?"":c_j_bFilterValue) + "&year=" + yearFilterValue + "&nationality=" + nationalityFilterValue + "&scl=" + scopusFilterValue + "&author_no=" + (authorsFilterValue === "ALL" ? "" : authorsFilterValue) + "&page=" + pageNo + "&limit=" + perPage + "&startDate=" + startDate + "&endDate=" + endDate).then((json) => {
             console.log("JSON", json)
             setData(json.docs);
             setPageData(json.limit == 0 ? 1 : json.pages)
@@ -186,7 +189,7 @@ function Publications2() {
             </Modal>
             <HomeNavbar />
             <div className="p-3" style={{
-                height: "90vh",
+                height: 0<data.length && data.length<10?"90vh":"100%",
                 width: "99vw",
                 "backgroundColor": "#c5d299"
             }}>
@@ -305,7 +308,7 @@ function Publications2() {
                             minWidth: 210
                         },
                         {
-                            Header: () => (<div>C/J/B/BC<br /><input type="text" id="c_j_b" name="c_j_b" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setc_j_bFilterValue(e.target.value); }} /></div>),
+                            Header: () => (<div>C/J/B/BC<br /><select id="c_j_b" onChange={(e) => { setc_j_bFilterValue(e.target.value); setGetApi(getApi + 1); setPageNo(1) }} >{jobs.map(verdict => { return (<option value={verdict}> {verdict} </option>) })}</select></div>),
                             accessor: "cjb",
                             //Cell: e => {e.original.cjb},
                             getProps: (state, rowInfo, column) => {
@@ -361,7 +364,7 @@ function Publications2() {
                             //minWidth: 140
                         },
                         {
-                            Header: () => (<div>Month-Year<br /><input type="text" id="year" name="year" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setYearFilterValue(e.target.value); }} /></div>),
+                            Header: () => (<div>Year<br /><input type="text" id="year" name="year" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setYearFilterValue(e.target.value); }} /></div>),
                             accessor: "year",
                             Cell: e => <a>{fun(e.original.year)}</a>,
                             getProps: (state, rowInfo, column) => {
@@ -374,20 +377,20 @@ function Publications2() {
                             },
                             //minWidth: 420
                         },
-                        //   {  
-                        //     Header: "Month",
-                        //     accessor: "month",
-                        //     //Cell: e =>{e.original.month},
-                        //     getProps: (state, rowInfo, column) => {
-                        //       return {
-                        //         style: {
-                        //           color: (rowInfo?.original?.my) ? color : textColor,
-                        //           background: rowInfo?.original?.my ? background : "#C3D496",
-                        //         },
-                        //       };
-                        //     },
-                        //minWidth: 210
-                        //   },
+                          {  
+                            Header: "Month",
+                            accessor: "month",
+                            //Cell: e =>{e.original.month},
+                            getProps: (state, rowInfo, column) => {
+                              return {
+                                style: {
+                                  color: (rowInfo?.original?.my) ? color : textColor,
+                                  background: rowInfo?.original?.my ? background : "#C3D496",
+                                },
+                              };
+                            },
+                        // minWidth: 210
+                          },
                         {
                             Header: "ISSN/ISBN/DOI",
                             accessor: "doi",
@@ -459,7 +462,7 @@ function Publications2() {
                             //minWidth: 420
                         },
                         {
-                            Header: () => (<div>Scopus/WoS/SCI<br /><input type="text" id="problem" name="problem" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setScopusFilterValue(e.target.value); }} /></div>),
+                            Header: () => (<div>SCI/Scopus/WoS/Others<br /><input type="text" id="problem" name="problem" onKeyPress={(e) => { if (e.key === "Enter") { setGetApi(getApi + 1); setPageNo(1) } }} onChange={(e) => { setScopusFilterValue(e.target.value); }} /></div>),
                             accessor: "scl",
                             //Cell: e =>{e.original.scl},
                             getProps: (state, rowInfo, column) => {
